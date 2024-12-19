@@ -9,15 +9,15 @@ void jdl::Texture::update()
     reset_update_rect();
 }
 
-void jdl::Texture::setPixel(int x, int y, int r, int g, int b, int a)
+void jdl::Texture::setPixel(int x, int y, Uint32 color)
 {
-    if (x >= base_width || y >= base_height || x < 0 || y < 0)
+    if (!in_bounds(x, y))
     {
         return;
     }
 
     const unsigned int index = y * base_width + x;
-    pixels[index] = SDL_MapRGBA(pf, r, g, b, a);
+    pixels[index] = color;
 
     if (x < top_left_update_position_x)
     {

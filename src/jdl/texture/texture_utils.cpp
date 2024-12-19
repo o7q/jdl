@@ -15,3 +15,8 @@ void jdl::Texture::reset_update_rect()
     bottom_right_update_position_x = 0;
     bottom_right_update_position_y = 0;
 }
+
+bool jdl::Texture::in_bounds(int x, int y)
+{
+    return x < base_width && y < base_height && x >= 0 && y >= 0;
+}

@@ -22,13 +22,14 @@ namespace jdl
         void setCrop(int start_x, int start_y, int end_x, int end_y);
         void setOrigin(int x, int y);
         void setRotation(float rotation);
-        void setPixel(int x, int y, int r, int g, int b, int a);
+        void setPixel(int x, int y, Uint32 color);
 
         int getWidth() const { return width; }
         int getHeight() const { return height; }
         int getBaseWidth() const { return base_width; }
         int getBaseHeight() const { return base_height; }
         float getRotation() const { return rotation; }
+        Uint32 getPixel(int x, int y) { return in_bounds(x, y) ? pixels[y * base_width + x] : 0x00000000; }
 
         SDL_Texture *getSDLTexture() const { return texture; }
         const SDL_Rect *getSDLTransformRect() const { return &transform_rect; }
@@ -40,6 +41,7 @@ namespace jdl
 
         SDL_Surface *convert_surface(SDL_Surface *surface_temp);
         void reset_update_rect();
+        bool in_bounds(int x, int y);
 
     private:
         int base_width = 0;
