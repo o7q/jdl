@@ -44,7 +44,6 @@ jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height)
 
 jdl::Texture::~Texture()
 {
-    SDL_FreeFormat(pf);
     SDL_DestroyTexture(texture);
 
     if (pixels != nullptr)
@@ -58,8 +57,6 @@ void jdl::Texture::init(SDL_Renderer *renderer, SDL_Surface *surface_formatted, 
 {
     texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, base_width, base_height);
     SDL_UpdateTexture(texture, NULL, surface_formatted->pixels, surface_formatted->pitch);
-
-    pf = SDL_AllocFormat(SDL_PIXELFORMAT_RGBA8888);
 
     this->base_width = base_width;
     this->base_height = base_height;

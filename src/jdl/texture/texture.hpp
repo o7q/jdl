@@ -69,7 +69,5 @@ namespace jdl
         int bottom_right_update_position_y = 0;
 
         SDL_Rect update_rect;
-
-        SDL_PixelFormat *pf = nullptr;
     };
 }
