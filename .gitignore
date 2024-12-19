@@ -1,0 +1,6 @@
+.vscode
+build
+src/main.cpp
+*.exe
+*.dll
+*.png
