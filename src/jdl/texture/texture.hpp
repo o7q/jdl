@@ -26,7 +26,9 @@ namespace jdl
 
         int getWidth() const { return width; }
         int getHeight() const { return height; }
+        // gets the original image width
         int getBaseWidth() const { return base_width; }
+        // gets the original image height
         int getBaseHeight() const { return base_height; }
         float getRotation() const { return rotation; }
         Uint32 getPixel(int x, int y) { return in_bounds(x, y) ? pixels[y * base_width + x] : 0x00000000; }
@@ -39,7 +41,6 @@ namespace jdl
     private:
         void init(SDL_Renderer *renderer, SDL_Surface *surface_temp, int width, int height);
 
-        SDL_Surface *convert_surface(SDL_Surface *surface_temp);
         void reset_update_rect();
         bool in_bounds(int x, int y);
 

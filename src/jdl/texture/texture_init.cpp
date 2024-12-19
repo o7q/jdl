@@ -12,7 +12,7 @@ jdl::Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
         return;
     }
 
-    SDL_Surface *surface_formatted = convert_surface(surface);
+    SDL_Surface *surface_formatted = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
 
     // init texture and format
     init(renderer, surface_formatted, surface->w, surface->h);
@@ -29,8 +29,7 @@ jdl::Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
 jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height)
 {
     // create blank surface
-    SDL_Surface *surface_temp = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-    SDL_Surface *surface_formatted = convert_surface(surface_temp);
+    SDL_Surface *surface_formatted = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA8888);
 
     // init texture and format
     init(renderer, surface_formatted, width, height);
@@ -38,7 +37,6 @@ jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height)
     // set pixeldata and pitch
     pixels = new Uint32[width * height];
 
-    SDL_FreeSurface(surface_temp);
     SDL_FreeSurface(surface_formatted);
 }
 

@@ -9,6 +9,7 @@ void jdl::Texture::setPosition(int x, int y)
     transform_rect.y = position_y - height / 2;
 }
 
+// sets the render size
 void jdl::Texture::setSize(int width, int height)
 {
     this->width = width;

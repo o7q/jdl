@@ -2,6 +2,7 @@
 
 #include <SDL2/SDL.h>
 
+// refresh the texture with the newly updated pixels
 void jdl::Texture::update()
 {
     void *update_pixels = &pixels[update_rect.y * base_width + update_rect.x];
@@ -9,6 +10,7 @@ void jdl::Texture::update()
     reset_update_rect();
 }
 
+// sets a pixel of the texture with a color
 void jdl::Texture::setPixel(int x, int y, Uint32 color)
 {
     if (!in_bounds(x, y))
