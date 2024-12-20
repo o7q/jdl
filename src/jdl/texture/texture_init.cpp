@@ -63,21 +63,24 @@ void jdl::Texture::init(SDL_Renderer *renderer, SDL_Surface *surface_formatted, 
 
     this->base_width = base_width;
     this->base_height = base_height;
+
+    pos_x = -width / 2;
+    pos_y = -height / 2;
+
     width = base_width;
     height = base_height;
+    prev_width = base_width;
+    prev_height = base_height;
 
-    transform_rect.x = -width / 2;
-    transform_rect.y = -height / 2;
-    transform_rect.w = width;
-    transform_rect.h = height;
+    crop_start_pos_x = 0;
+    crop_start_pos_y = 0;
+    crop_end_pos_x = base_width;
+    crop_end_pos_y = base_height;
 
-    crop_rect.x = 0;
-    crop_rect.y = 0;
-    crop_rect.w = width;
-    crop_rect.h = height;
+    center_pos_x = base_width / 2;
+    center_pos_y = base_height / 2;
 
-    center_point.x = width / 2;
-    center_point.y = height / 2;
+    update_sdl_transforms();
 
     reset_update_rect();
 }

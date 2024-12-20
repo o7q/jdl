@@ -5,10 +5,9 @@ set NAME=jdl
 if not exist build (
     mkdir build
 )
-cd build
 
-cmake -S .. -B . -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
-cmake --build . -j8
+cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j8
 
-copy "%NAME%.exe" "../%NAME%.exe"
+copy "build\%NAME%.exe" "%NAME%.exe"
 pause

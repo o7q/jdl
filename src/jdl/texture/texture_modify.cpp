@@ -21,25 +21,25 @@ void jdl::Texture::setPixel(int x, int y, Uint32 color)
     const unsigned int index = y * base_width + x;
     pixels[index] = color;
 
-    if (x < top_left_update_position_x)
+    if (x < top_left_update_pos_x)
     {
-        top_left_update_position_x = x;
+        top_left_update_pos_x = x;
     }
-    if (y < top_left_update_position_y)
+    if (y < top_left_update_pos_y)
     {
-        top_left_update_position_y = y;
+        top_left_update_pos_y = y;
     }
-    if (x > bottom_right_update_position_x)
+    if (x > bottom_right_update_pos_x)
     {
-        bottom_right_update_position_x = x;
+        bottom_right_update_pos_x = x;
     }
-    if (y > bottom_right_update_position_y)
+    if (y > bottom_right_update_pos_y)
     {
-        bottom_right_update_position_y = y;
+        bottom_right_update_pos_y = y;
     }
 
-    update_rect.x = top_left_update_position_x;
-    update_rect.y = top_left_update_position_y;
-    update_rect.w = bottom_right_update_position_x - top_left_update_position_x + 1;
-    update_rect.h = bottom_right_update_position_y - top_left_update_position_y + 1;
+    update_rect.x = top_left_update_pos_x;
+    update_rect.y = top_left_update_pos_y;
+    update_rect.w = bottom_right_update_pos_x - top_left_update_pos_x + 1;
+    update_rect.h = bottom_right_update_pos_y - top_left_update_pos_y + 1;
 }

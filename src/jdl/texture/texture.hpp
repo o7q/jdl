@@ -44,15 +44,28 @@ namespace jdl
         void reset_update_rect();
         bool in_bounds(int x, int y);
 
+        void update_sdl_transforms();
+
     private:
         int base_width = 0;
         int base_height = 0;
 
-        int position_x = 0;
-        int position_y = 0;
+        int pos_x = 0;
+        int pos_y = 0;
 
         int width = 0;
         int height = 0;
+        int prev_width = 0;
+        int prev_height = 0;
+
+        int center_pos_x = 0;
+        int center_pos_y = 0;
+
+        int crop_start_pos_x = 0;
+        int crop_start_pos_y = 0;
+
+        int crop_end_pos_x = 0;
+        int crop_end_pos_y = 0;
 
         float rotation = 0.0f;
 
@@ -63,11 +76,11 @@ namespace jdl
         SDL_Texture *texture = nullptr;
         Uint32 *pixels = nullptr;
 
-        int top_left_update_position_x = 0;
-        int top_left_update_position_y = 0;
+        int top_left_update_pos_x = 0;
+        int top_left_update_pos_y = 0;
 
-        int bottom_right_update_position_x = 0;
-        int bottom_right_update_position_y = 0;
+        int bottom_right_update_pos_x = 0;
+        int bottom_right_update_pos_y = 0;
 
         SDL_Rect update_rect;
     };
