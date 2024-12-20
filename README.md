@@ -1,4 +1,4 @@
-# jdl
+# jdl (wip)
 
 ✨ useful abstractions for SDL. \
 **Every module is self-contained and doesn't require anything other than SDL to operate.*
