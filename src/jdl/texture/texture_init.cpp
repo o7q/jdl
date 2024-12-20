@@ -14,6 +14,11 @@ jdl::Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
 
     SDL_Surface *surface_formatted = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
 
+    if (!surface_formatted)
+    {
+        return;
+    }
+
     // init texture and format
     init(renderer, surface_formatted, surface->w, surface->h);
 

@@ -11,6 +11,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE -O2)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
+find_package(SDL2_mixer REQUIRED)
 
-include_directories(${SDL2_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} SDL2::SDL2 SDL2::SDL2main SDL2_image::SDL2_image)
+include_directories(${SDL2_INCLUDE_DIRS} "C:/Program Files (x86)/SDL2_mixer/include")
+target_link_libraries(${PROJECT_NAME} SDL2::SDL2 SDL2::SDL2main SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)

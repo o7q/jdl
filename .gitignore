@@ -4,3 +4,4 @@ src/main.cpp
 *.exe
 *.dll
 *.png
+*.wav
