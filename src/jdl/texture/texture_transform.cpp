@@ -59,8 +59,7 @@ void jdl::Texture::update_sdl_transforms()
     crop_rect.w = crop_end_pos_x;
     crop_rect.h = crop_end_pos_y;
 
-    // set and offset the point by the size/2 to account for the center
-    // we multiply the point by size/prev_size to ensure the center is visually preserved
-    center_point.x = (width / (float)prev_width) * center_pos_x + width / 2;
-    center_point.y = (height / (float)prev_height) * center_pos_y + height / 2;
+    // multiply the point by size/prev_size to ensure the center is visually preserved
+    center_point.x = (width / static_cast<float>(prev_width)) * center_pos_x;
+    center_point.y = (height / static_cast<float>(prev_height)) * center_pos_y;
 }

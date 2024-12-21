@@ -15,6 +15,8 @@ namespace jdl
 
         ~Texture();
 
+        Texture(const Texture &other) = delete;
+
         void update();
 
         void setPosition(int x, int y);
