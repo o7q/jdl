@@ -8,13 +8,16 @@
 - A texture class that expands upon `SDL_Texture`, adding useful functions such as `setPixel()` and several transformation utilities
 - `texture.update()` can be used to update the pixels of the texture after a pixel operation such as `setPixel()`
 
+<details>
+<summary><h3>Usage</h3></summary>
+
 - ### Creating a texture
 
   From a surface
 
   ```c++
   SDL_Surface *image = IMG_Load("image.png");
-  jdl::Texture texture(renderer, image);
+  jdl::Texture texture(renderer, image); // you need to pass in an SDL_Renderer*
   ```
 
   **OR**
@@ -22,15 +25,14 @@
   A blank texture
 
   ```c++
-  SDL_Surface *image = IMG_Load("image.png");
   jdl::Texture texture(renderer, 1000, 1000);
   ```
 
 - ### Transforming a texture
 
   ```c++
-  texture.setPosition(windowWidth / 2, windowHeight / 2);
-  texture.setSize(512, 512);
+  texture.setPosition(windowWidth / 2, windowHeight / 2); // position at screen center
+  texture.setSize(512, 512); // 512 x 512 pixels
   ```
 
 - ### Modifying a texture
@@ -56,6 +58,7 @@
                    texture.getSDLCenterPoint(),
                    SDL_FLIP_NONE);
   ```
+</details>
 
 ## jdl::Color
 
