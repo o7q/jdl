@@ -64,6 +64,9 @@
 
 - A color structure that implements useful conversions between `RGBA` and Uint32 `hex` values
 
+<details>
+<summary><b>Usage</b></summary>
+
 - ### Creating a color
 
   ```c++
@@ -89,3 +92,5 @@
 
   Uint32 hex = myColor1.hex();
   ```
+
+</details>
