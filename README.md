@@ -9,7 +9,7 @@
 - `texture.update()` can be used to update the pixels of the texture after a pixel operation such as `setPixel()`
 
 <details>
-<summary><h3>Usage</h3></summary>
+<summary><b>Usage</b></summary>
 
 - ### Creating a texture
 
