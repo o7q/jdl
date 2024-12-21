@@ -9,7 +9,7 @@
 - `texture.update()` can be used to update the pixels of the texture after a pixel operation such as `setPixel()`
 
 <details>
-<summary><b>Usage</b></summary>
+<summary><b>❗ Usage</b></summary>
 
 - ### Creating a texture
 
@@ -65,7 +65,7 @@
 - A color structure that implements useful conversions between `RGBA` and Uint32 `hex` values
 
 <details>
-<summary><b>Usage</b></summary>
+<summary><b>❗ Usage</b></summary>
 
 - ### Creating a color
 
