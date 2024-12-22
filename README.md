@@ -1,6 +1,6 @@
 # jdl (wip)
 
-✨ useful abstractions for SDL
+useful abstractions for SDL. ✨
 
 ---
 
