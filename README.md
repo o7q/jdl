@@ -2,9 +2,6 @@
 
 ✨ useful abstractions for SDL
 
-- Every module is self-contained and doesn't require anything other than SDL to operate.\
-- `SDL_PIXELFORMAT_RGBA8888` is used as the pixel format for these modules.
-
 ---
 
 ## jdl::Texture
@@ -65,6 +62,8 @@
 
 </details>
 
+---
+
 ## jdl::Color
 
 - A color structure that implements useful conversions between `RGBA` and Uint32 `hex` values
@@ -99,3 +98,10 @@
   ```
 
 </details>
+
+---
+
+## Notes
+
+- Every module is self-contained and doesn't require anything other than SDL to operate.
+- `SDL_PIXELFORMAT_RGBA8888` is used as the pixel format for these modules.
