@@ -40,12 +40,14 @@ useful abstractions for SDL. ✨
 
   ```c++
   texture.setPixel(100, 100, 0xFF00FFFF); // set pixel at (100, 100) to pink
+  texture.update(); // update texture pixels
   ```
 
   With *jdl::Color*
 
   ```c++
   texture.setPixel(100, 100, jdl::Color(255, 0, 255, 255).hex()); // set pixel at (100, 100) to pink
+  texture.update();
   ```
 
 - ### Rendering a texture with SDL
