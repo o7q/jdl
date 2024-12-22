@@ -1,7 +1,11 @@
 # jdl (wip)
 
-✨ useful abstractions for SDL. \
-**Every module is self-contained and doesn't require anything other than SDL to operate.*
+✨ useful abstractions for SDL
+
+- Every module is self-contained and doesn't require anything other than SDL to operate.\
+- `SDL_PIXELFORMAT_RGBA8888` is used as the pixel format for these modules.
+
+---
 
 ## jdl::Texture
 
