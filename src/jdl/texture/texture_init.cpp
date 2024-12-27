@@ -31,10 +31,23 @@ jdl::Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
 }
 
 // create blank texture
-jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height)
+jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height, Uint32 color, FillMode drawMode)
 {
     // create blank surface
     SDL_Surface *surface_formatted = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA8888);
+
+    switch (drawMode)
+    {
+    case FillMode::FillRect:
+        init_surface_create_fill(surface_formatted, width, height, color);
+        break;
+    case FillMode::FillCircle:
+        init_surface_create_circle(surface_formatted, width, height, color);
+        break;
+    default:
+        init_surface_create_fill(surface_formatted, width, height, color);
+        break;
+    }
 
     // init texture and format
     init(renderer, surface_formatted, width, height);

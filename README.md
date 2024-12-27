@@ -29,6 +29,16 @@ useful abstractions for SDL. ✨
   jdl::Texture texture(renderer, 1000, 1000);
   ```
 
+- ### Creating shapes (shape textures)
+
+  ```c++
+  jdl::Texture circle(renderer, 1000, 1000, 0xFF00FFFF, jdl::Texture::FillMode::FillCircle);
+
+  jdl::Texture square(renderer, 1000, 1000, 0xFF00FFFF, jdl::Texture::FillMode::FillSquare);
+
+  jdl::Texture rectangle(renderer, 512, 256, 0xFF00FFFF, jdl::Texture::FillMode::FillSquare);
+  ```
+
 - ### Transforming a texture
 
   ```c++

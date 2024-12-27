@@ -4,14 +4,23 @@
 
 namespace jdl
 {
+    class Texture;
+    void renderTexture(SDL_Renderer *renderer, const Texture &texture);
+
     class Texture
     {
     public:
+        enum class FillMode
+        {
+            FillRect,
+            FillCircle
+        };
+
         // create blank texture
         Texture(SDL_Renderer *renderer, SDL_Surface *surface);
 
         // create blank texture
-        Texture(SDL_Renderer *renderer, int width, int height);
+        Texture(SDL_Renderer *renderer, int width, int height, Uint32 color = 0xFFFFFFFF, FillMode drawMode = FillMode::FillRect);
 
         ~Texture();
 
@@ -33,7 +42,7 @@ namespace jdl
         // gets the original image height
         int getBaseHeight() const { return base_height; }
         float getRotation() const { return rotation; }
-        Uint32 getPixel(int x, int y) { return in_bounds(x, y) ? pixels[y * base_width + x] : 0x00000000; }
+        Uint32 getPixel(int x, int y) const { return in_bounds(x, y) ? pixels[y * base_width + x] : 0x00000000; }
 
         SDL_Texture *getSDLTexture() const { return texture; }
         const SDL_Rect *getSDLTransformRect() const { return &transform_rect; }
@@ -41,10 +50,13 @@ namespace jdl
         const SDL_Point *getSDLCenterPoint() const { return &center_point; }
 
     private:
+        void init_surface_create_fill(SDL_Surface *surface, int width, int height, Uint32 color);
+        void init_surface_create_circle(SDL_Surface *surface, int width, int height, Uint32 color);
+
         void init(SDL_Renderer *renderer, SDL_Surface *surface_temp, int width, int height);
 
         void reset_update_rect();
-        bool in_bounds(int x, int y);
+        bool in_bounds(int x, int y) const;
 
         void update_sdl_transforms();
 
