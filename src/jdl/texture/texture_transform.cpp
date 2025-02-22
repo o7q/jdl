@@ -1,65 +1,63 @@
 #include "texture.hpp"
 
-#include <iostream>
-
-void jdl::Texture::setPosition(int x, int y)
+void Texture::setPosition(int x, int y)
 {
-    pos_x = x;
-    pos_y = y;
+    m_pos_x = x;
+    m_pos_y = y;
 
     update_sdl_transforms();
 }
 
 // sets the render size
-void jdl::Texture::setSize(int width, int height)
+void Texture::setSize(int width, int height)
 {
-    prev_width = this->width;
-    prev_height = this->height;
+    m_prev_width = m_width;
+    m_prev_height = m_height;
 
-    this->width = width;
-    this->height = height;
+    m_width = width;
+    m_height = height;
 
     update_sdl_transforms();
 }
 
-void jdl::Texture::setCrop(int start_x, int start_y, int end_x, int end_y)
+void Texture::setCrop(int start_x, int start_y, int end_x, int end_y)
 {
-    crop_start_pos_x = start_x;
-    crop_start_pos_y = start_y;
-    crop_end_pos_x = end_x;
-    crop_end_pos_y = end_y;
+    m_crop_start_pos_x = start_x;
+    m_crop_start_pos_y = start_y;
+    m_crop_end_pos_x = end_x;
+    m_crop_end_pos_y = end_y;
 
     update_sdl_transforms();
 }
 
-void jdl::Texture::setOrigin(int x, int y)
+void Texture::setOrigin(int x, int y)
 {
-    center_pos_x = x;
-    center_pos_y = y;
+    m_center_pos_x = x;
+    m_center_pos_y = y;
 
     update_sdl_transforms();
 }
 
-void jdl::Texture::setRotation(float rotation)
+void Texture::setRotation(float rotation)
 {
-    this->rotation = rotation;
+    m_rotation = rotation;
 }
 
-void jdl::Texture::update_sdl_transforms()
+void Texture::update_sdl_transforms()
 {
     // transform the texture by its -size/2 to make it appear properly centered
-    transform_rect.x = pos_x - width / 2;
-    transform_rect.y = pos_y - height / 2;
-    transform_rect.w = width;
-    transform_rect.h = height;
+    m_transform_rect.x = m_pos_x - m_width / 2;
+    m_transform_rect.y = m_pos_y - m_height / 2;
+    m_transform_rect.w = m_width;
+    m_transform_rect.h = m_height;
 
     // set crop rectangles
-    crop_rect.x = crop_start_pos_x;
-    crop_rect.y = crop_start_pos_y;
-    crop_rect.w = crop_end_pos_x;
-    crop_rect.h = crop_end_pos_y;
+    m_crop_rect.x = m_crop_start_pos_x;
+    m_crop_rect.y = m_crop_start_pos_y;
+    m_crop_rect.w = m_crop_end_pos_x;
+    m_crop_rect.h = m_crop_end_pos_y;
 
     // multiply the point by size/prev_size to ensure the center is visually preserved
-    center_point.x = (width / static_cast<float>(prev_width)) * center_pos_x;
-    center_point.y = (height / static_cast<float>(prev_height)) * center_pos_y;
+    m_center_point.x = (m_width / static_cast<float>(m_prev_width)) * m_center_pos_x;
+    m_center_point.y = (m_height / static_cast<float>(m_prev_height)) * m_center_pos_y;
 }

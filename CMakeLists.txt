@@ -7,10 +7,11 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
-target_compile_options(${PROJECT_NAME} PRIVATE -O2)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
-find_package(SDL2_mixer REQUIRED)
+target_compile_options(${PROJECT_NAME} PRIVATE -O3 -Wall)
 
-target_link_libraries(${PROJECT_NAME} SDL2::SDL2 SDL2::SDL2main SDL2_image::SDL2_image SDL2_mixer::SDL2_mixer)
+find_package(SDL3 REQUIRED)
+find_package(SDL3_image REQUIRED)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
+target_link_options(${PROJECT_NAME} PRIVATE -static)

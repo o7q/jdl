@@ -1,14 +1,14 @@
 #include "texture.hpp"
 
-void jdl::Texture::reset_update_rect()
+void Texture::reset_update_rect()
 {
-    top_left_update_pos_x = base_width;
-    top_left_update_pos_y = base_height;
-    bottom_right_update_pos_x = 0;
-    bottom_right_update_pos_y = 0;
+    m_top_left_update_pos_x = m_base_width;
+    m_top_left_update_pos_y = m_base_height;
+    m_bottom_right_update_pos_x = 0;
+    m_bottom_right_update_pos_y = 0;
 }
 
-bool jdl::Texture::in_bounds(int x, int y) const
+bool Texture::in_bounds(int x, int y) const
 {
-    return x < base_width && y < base_height && x >= 0 && y >= 0;
+    return x < m_base_width && y < m_base_height && x >= 0 && y >= 0;
 }

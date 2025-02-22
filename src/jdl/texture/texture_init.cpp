@@ -2,98 +2,79 @@
 
 #include <cstring>
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
 // create texture from image
-jdl::Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
+Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
 {
     if (!renderer || !surface)
     {
         return;
     }
 
-    SDL_Surface *surface_formatted = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
+    SDL_Surface *formatted = SDL_ConvertSurface(surface, SDL_PIXELFORMAT_RGBA8888);
+    m_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, formatted->w, formatted->h);
 
-    if (!surface_formatted)
-    {
-        return;
-    }
+    const unsigned int pixel_count = formatted->w * formatted->h;
+    m_pixels = new Uint32[pixel_count];
+    std::memcpy(m_pixels, formatted->pixels, pixel_count * sizeof(Uint32));
 
-    // init texture and format
-    init(renderer, surface_formatted, surface->w, surface->h);
+    SDL_UpdateTexture(m_texture, NULL, formatted->pixels, formatted->pitch);
 
-    // set pixeldata and pitch
-    int pixel_count = base_width * base_height;
-    pixels = new Uint32[pixel_count];
-    std::memcpy(pixels, surface_formatted->pixels, pixel_count * sizeof(Uint32));
+    m_base_height = formatted->w;
+    m_base_height = formatted->h;
 
-    SDL_FreeSurface(surface_formatted);
+    init_transforms();
+
+    SDL_DestroySurface(formatted);
 }
 
 // create blank texture
-jdl::Texture::Texture(SDL_Renderer *renderer, int width, int height, Uint32 color, FillMode drawMode)
+Texture::Texture(SDL_Renderer *renderer, int width, int height)
 {
-    // create blank surface
-    SDL_Surface *surface_formatted = SDL_CreateRGBSurfaceWithFormat(0, width, height, 32, SDL_PIXELFORMAT_RGBA8888);
+    m_texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, width, height);
 
-    switch (drawMode)
-    {
-    case FillMode::FillRect:
-        init_surface_create_fill(surface_formatted, width, height, color);
-        break;
-    case FillMode::FillCircle:
-        init_surface_create_circle(surface_formatted, width, height, color);
-        break;
-    default:
-        init_surface_create_fill(surface_formatted, width, height, color);
-        break;
-    }
+    m_pixels = new Uint32[width * height];
+    for (int i = 0; i < width * height; ++i)
+        m_pixels[i] = 0xFFFFFFFF;
 
-    // init texture and format
-    init(renderer, surface_formatted, width, height);
+    SDL_UpdateTexture(m_texture, NULL, m_pixels, width * sizeof(Uint32));
 
-    // set pixeldata and pitch
-    pixels = new Uint32[width * height];
+    m_base_width = width;
+    m_base_height = height;
 
-    SDL_FreeSurface(surface_formatted);
+    init_transforms();
 }
 
-jdl::Texture::~Texture()
+Texture::~Texture()
 {
-    SDL_DestroyTexture(texture);
+    SDL_DestroyTexture(m_texture);
 
-    if (pixels != nullptr)
+    if (m_pixels != nullptr)
     {
-        delete[] pixels;
-        pixels = nullptr;
+        delete[] m_pixels;
+        m_pixels = nullptr;
     }
 }
 
-void jdl::Texture::init(SDL_Renderer *renderer, SDL_Surface *surface_formatted, int base_width, int base_height)
+void Texture::init_transforms()
 {
-    texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STREAMING, base_width, base_height);
-    SDL_UpdateTexture(texture, NULL, surface_formatted->pixels, surface_formatted->pitch);
+    m_pos_x = -m_width / 2;
+    m_pos_y = -m_height / 2;
 
-    this->base_width = base_width;
-    this->base_height = base_height;
+    m_width = m_base_width;
+    m_height = m_base_height;
+    m_prev_width = m_base_width;
+    m_prev_height = m_base_height;
 
-    pos_x = -width / 2;
-    pos_y = -height / 2;
+    m_crop_start_pos_x = 0;
+    m_crop_start_pos_y = 0;
+    m_crop_end_pos_x = m_base_width;
+    m_crop_end_pos_y = m_base_height;
 
-    width = base_width;
-    height = base_height;
-    prev_width = base_width;
-    prev_height = base_height;
-
-    crop_start_pos_x = 0;
-    crop_start_pos_y = 0;
-    crop_end_pos_x = base_width;
-    crop_end_pos_y = base_height;
-
-    center_pos_x = base_width / 2;
-    center_pos_y = base_height / 2;
+    m_center_pos_x = m_base_width / 2;
+    m_center_pos_y = m_base_height / 2;
 
     update_sdl_transforms();
-
     reset_update_rect();
 }

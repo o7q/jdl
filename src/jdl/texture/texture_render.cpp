@@ -1,10 +1,10 @@
 #include "texture.hpp"
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
-void jdl::renderTexture(SDL_Renderer *renderer, const Texture &texture)
+void renderTexture(SDL_Renderer *renderer, const Texture &texture)
 {
-    SDL_RenderCopyEx(renderer,
+    SDL_RenderTextureRotated(renderer,
                      texture.getSDLTexture(),
                      texture.getSDLCropRect(),
                      texture.getSDLTransformRect(),

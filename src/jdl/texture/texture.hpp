@@ -1,101 +1,82 @@
 #pragma once
 
-#include <SDL2/SDL.h>
+#include <SDL3/SDL.h>
 
-namespace jdl
+class Texture;
+void renderTexture(SDL_Renderer *renderer, const Texture &texture);
+
+class Texture
 {
-    class Texture;
-    void renderTexture(SDL_Renderer *renderer, const Texture &texture);
+public:
+    Texture(SDL_Renderer *renderer, SDL_Surface *surface);
+    Texture(SDL_Renderer *renderer, int width, int height);
+    ~Texture();
 
-    class Texture
-    {
-    public:
-        enum class FillMode
-        {
-            FillRect,
-            FillCircle
-        };
+    Texture(const Texture &other) = delete;
 
-        // create blank texture
-        Texture(SDL_Renderer *renderer, SDL_Surface *surface);
+    void update();
 
-        // create blank texture
-        Texture(SDL_Renderer *renderer, int width, int height, Uint32 color = 0xFFFFFFFF, FillMode drawMode = FillMode::FillRect);
+    void setPosition(int x, int y);
+    void setSize(int width, int height);
+    void setCrop(int start_x, int start_y, int end_x, int end_y);
+    void setOrigin(int x, int y);
+    void setRotation(float rotation);
+    void setPixel(int x, int y, Uint32 color);
 
-        ~Texture();
+    int getWidth() const { return m_width; }
+    int getHeight() const { return m_height; }
+    // gets the original image width
+    int getBaseWidth() const { return m_base_width; }
+    // gets the original image height
+    int getBaseHeight() const { return m_base_height; }
+    float getRotation() const { return m_rotation; }
+    Uint32 getPixel(int x, int y) const { return in_bounds(x, y) ? m_pixels[y * m_base_width + x] : 0x00000000; }
 
-        Texture(const Texture &other) = delete;
+    SDL_Texture *getSDLTexture() const { return m_texture; }
+    const SDL_FRect *getSDLTransformRect() const { return &m_transform_rect; }
+    const SDL_FRect *getSDLCropRect() const { return &m_crop_rect; }
+    const SDL_FPoint *getSDLCenterPoint() const { return &m_center_point; }
 
-        void update();
+private:
+    void init_transforms();
 
-        void setPosition(int x, int y);
-        void setSize(int width, int height);
-        void setCrop(int start_x, int start_y, int end_x, int end_y);
-        void setOrigin(int x, int y);
-        void setRotation(float rotation);
-        void setPixel(int x, int y, Uint32 color);
+    bool in_bounds(int x, int y) const;
+    
+    void update_sdl_transforms();
+    void reset_update_rect();
 
-        int getWidth() const { return width; }
-        int getHeight() const { return height; }
-        // gets the original image width
-        int getBaseWidth() const { return base_width; }
-        // gets the original image height
-        int getBaseHeight() const { return base_height; }
-        float getRotation() const { return rotation; }
-        Uint32 getPixel(int x, int y) const { return in_bounds(x, y) ? pixels[y * base_width + x] : 0x00000000; }
+private:
+    int m_base_width = 0;
+    int m_base_height = 0;
 
-        SDL_Texture *getSDLTexture() const { return texture; }
-        const SDL_Rect *getSDLTransformRect() const { return &transform_rect; }
-        const SDL_Rect *getSDLCropRect() const { return &crop_rect; }
-        const SDL_Point *getSDLCenterPoint() const { return &center_point; }
+    int m_pos_x = 0;
+    int m_pos_y = 0;
 
-    private:
-        void init_surface_create_fill(SDL_Surface *surface, int width, int height, Uint32 color);
-        void init_surface_create_circle(SDL_Surface *surface, int width, int height, Uint32 color);
+    int m_width = 0;
+    int m_height = 0;
+    int m_prev_width = 0;
+    int m_prev_height = 0;
 
-        void init(SDL_Renderer *renderer, SDL_Surface *surface_temp, int width, int height);
+    int m_center_pos_x = 0;
+    int m_center_pos_y = 0;
 
-        void reset_update_rect();
-        bool in_bounds(int x, int y) const;
+    int m_crop_start_pos_x = 0;
+    int m_crop_start_pos_y = 0;
+    int m_crop_end_pos_x = 0;
+    int m_crop_end_pos_y = 0;
 
-        void update_sdl_transforms();
+    float m_rotation = 0.0f;
 
-    private:
-        int base_width = 0;
-        int base_height = 0;
+    SDL_FRect m_transform_rect;
+    SDL_FRect m_crop_rect;
+    SDL_FPoint m_center_point;
 
-        int pos_x = 0;
-        int pos_y = 0;
+    SDL_Texture *m_texture = nullptr;
+    Uint32 *m_pixels = nullptr;
 
-        int width = 0;
-        int height = 0;
-        int prev_width = 0;
-        int prev_height = 0;
-
-        int center_pos_x = 0;
-        int center_pos_y = 0;
-
-        int crop_start_pos_x = 0;
-        int crop_start_pos_y = 0;
-
-        int crop_end_pos_x = 0;
-        int crop_end_pos_y = 0;
-
-        float rotation = 0.0f;
-
-        SDL_Rect transform_rect;
-        SDL_Rect crop_rect;
-        SDL_Point center_point;
-
-        SDL_Texture *texture = nullptr;
-        Uint32 *pixels = nullptr;
-
-        int top_left_update_pos_x = 0;
-        int top_left_update_pos_y = 0;
-
-        int bottom_right_update_pos_x = 0;
-        int bottom_right_update_pos_y = 0;
-
-        SDL_Rect update_rect;
-    };
-}
+    int m_top_left_update_pos_x = 0;
+    int m_top_left_update_pos_y = 0;
+    int m_bottom_right_update_pos_x = 0;
+    int m_bottom_right_update_pos_y = 0;
+    SDL_Rect m_update_rect;
+};
