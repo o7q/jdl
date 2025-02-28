@@ -21,7 +21,7 @@ Texture::Texture(SDL_Renderer *renderer, SDL_Surface *surface)
 
     SDL_UpdateTexture(m_texture, NULL, formatted->pixels, formatted->pitch);
 
-    m_base_height = formatted->w;
+    m_base_width = formatted->w;
     m_base_height = formatted->h;
 
     init_transforms();
